@@ -1,0 +1,38 @@
+name: WatchDog
+version: '${project.version}'
+main: watchdog.watchdog.WatchDog
+api-version: 1.19
+authors: [ FSMP ]
+description: WatchDog
+commands:
+  wd:
+    description: 'WatchDog plugin command'
+    aliases: [watchdog]
+permissions:
+  watchdog.*:
+    default: false
+    description: Implies all WatchDog permissions
+    children:
+      watchdog.use: true
+      watchdog.add: true
+      watchdog.remove: true
+      watchdog.statusupdates: true
+  watchdog.use:
+    default: false
+    description: Allows user to use WatchDog
+  watchdog.add:
+    default: false
+    description: Allows user to add a player to the watchlist
+    children:
+      watchdog.use: true
+  watchdog.remove:
+    default: false
+    description: Allows user to remove a player from the watchlist
+    children:
+      watchdog.use: true
+      watchdog.add: true
+  watchdog.statusupdates:
+    default: false
+    description: Allows user to be informed when watched players login
+    children:
+      watchdog.use: true
