@@ -4,6 +4,7 @@ main: watchdog.watchdog.WatchDog
 api-version: 1.19
 authors: [ FSMP ]
 description: WatchDog
+resourceId: 107408
 commands:
   wd:
     description: 'WatchDog plugin command'

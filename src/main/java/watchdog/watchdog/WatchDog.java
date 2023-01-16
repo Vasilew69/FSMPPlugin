@@ -1,9 +1,12 @@
 package watchdog.watchdog;
 
+
 import jdk.jfr.internal.Logger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import watchdog.watchdog.packet.PacketHandler;
+import watchdog.watchdog.repeatable.RepeatHandler;
 
 
 public class WatchDog extends JavaPlugin {
@@ -35,11 +38,22 @@ public class WatchDog extends JavaPlugin {
     public void onEnable() {
         getLogger().info("Watchdog is watching");
 
-        saveDefaultConfig();
-
         instance = this;
 
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
+        new UpdateChecker(this, 12345).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("There is not a new update available.");
+            } else {
+                getLogger().info("There is a new update available.");
+            }
+        });
+
+        new RepeatHandler(this);
+        new PacketHandler(this);
+
+        WatchDogFactory.loadDogs(this);
     }
 
 

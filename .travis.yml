@@ -1,0 +1,19 @@
+language: java
+
+script: ./mvnw clean package
+
+cache:
+  directories:
+    - $HOME/.m2
+
+deploy:
+  provider: releases
+  api_key:
+    secure: YQKi0u9gfEPjTbRirdapEKVUCtEfbfZnCLo1P57NMBk8bnOYkRwla3dt0/2/FgilJqBW5tnn6gbvXjmv/jhHKjLIDHfRGFhMB83YBg4jUiXgvN32YjwKMIkZjqm0lQpZ2J0dMrKFAXCqGsZlZL9Hw/dt0CdR8CFcWjFiQJqCZRt1kJXi8icwWwbvvz86cWEHKZtFw2ISPVaCjwQka1jeF3SuLfpEiL5n+cJ9Gz4Xlq9SXUPEIzjA+nevrcEP04J23nOXvbFzdHrqPomTjvQsd0VaacS9HYKBOVQNUGP+a/Vx5xTEPbC/Ybdjr78mgNNqRWs77EA7de/Tww9B9Q2nonmGXQrD17OV6GyTobzddu8cexCGDf69OSiHBYGRYZ5IqiJaikeZYFodvMb14qR+ZAbdN5i9lE+BliB7Qh5XrJL5KW7ZFZS0mZ6vhMMRJ0ZFdTNo/Oaei1Xlu70L1aIRZ/1rQeqiABSzbNv6+c+bhYfmYEakX+rhnO5tqWZ7rAidSYMUgpmXjhva1H5ZTD2WMSBgdk7ULWwWzE2fLA5lVjkWvQc9qMOM850LCT6qAvGUlDsMNziP358q+1+R20J6vPnoaTsBXEhm6YfQnRQ8uKc+jJ98EeMKF9Fb4vaqoOk8GrxWCmfOeOYVYhpkVF2eIHJJQdo/53+VU9yvWFPQtr4=
+  file_glob: true
+  file: target/avis-watchdog-1.0-SNAPSHOT.jar
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+    repo: OrigamiDream/Avis-WatchDog

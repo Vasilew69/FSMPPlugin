@@ -6,7 +6,7 @@
 
     <groupId>WatchDog</groupId>
     <artifactId>WatchDog</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>WatchDog</name>
@@ -40,9 +40,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                        <suiteXmsFiles>
-                            <suiteXmlFile>TestNG</suiteXmlFile>
-                        </suiteXmsFiles>
                     </configuration>
                     </execution>
                 </executions>
@@ -79,6 +76,18 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.19.3-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.19.3-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.19.3-R0.1-SNAPSHOT</version>
@@ -88,7 +97,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.7.2-R0.3</version>
+            <version>1.10.2-R0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
