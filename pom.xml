@@ -40,7 +40,10 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
+                        <suiteXmsFiles>
+                            <suiteXmlFile>TestNG</suiteXmlFile>
+                        </suiteXmsFiles>
+                    </configuration>
                     </execution>
                 </executions>
             </plugin>
