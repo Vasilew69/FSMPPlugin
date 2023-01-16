@@ -1,12 +1,8 @@
 package watchdog.watchdog;
 
-
-import jdk.jfr.internal.Logger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import watchdog.watchdog.packet.PacketHandler;
-import watchdog.watchdog.repeatable.RepeatHandler;
 
 
 public class WatchDog extends JavaPlugin {
@@ -49,11 +45,6 @@ public class WatchDog extends JavaPlugin {
                 getLogger().info("There is a new update available.");
             }
         });
-
-        new RepeatHandler(this);
-        new PacketHandler(this);
-
-        WatchDogFactory.loadDogs(this);
     }
 
 
