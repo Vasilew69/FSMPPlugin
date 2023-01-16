@@ -3,8 +3,7 @@ package watchdog.watchdog;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;

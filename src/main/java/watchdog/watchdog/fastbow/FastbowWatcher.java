@@ -1,14 +1,12 @@
 package watchdog.watchdog.fastbow;
 
+import org.bukkit.event.entity.EntityShootBowEvent;
 import watchdog.watchdog.api.WatchDog;
 import watchdog.watchdog.api.repeatable.IRepeatable;
 import watchdog.watchdog.repeatable.RepeatHandler;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Iterator;

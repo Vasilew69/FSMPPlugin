@@ -4,8 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import watchdog.watchdog.api.suspicios.Reportable;
-import watchdog.watchdog.api.suspicios.Suspicious;
+import watchdog.watchdog.api.suspicios.*;
 
 import java.lang.IllegalAccessException;
 import java.util.Map;

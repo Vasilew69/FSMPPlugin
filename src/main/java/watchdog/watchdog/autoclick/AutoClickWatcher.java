@@ -1,8 +1,7 @@
 package watchdog.watchdog.autoclick;
 
 import watchdog.watchdog.api.WatchDog;
-import watchdog.watchdog.api.packet.PacketInfo;
-import watchdog.watchdog.api.packet.PacketListener;
+import watchdog.watchdog.api.packet.*;
 
 import net.minecraft.server.v1_10_R1.PacketPlayInUseEntity;
 

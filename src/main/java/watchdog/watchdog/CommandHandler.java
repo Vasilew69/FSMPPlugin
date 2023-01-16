@@ -1,8 +1,6 @@
 package watchdog.watchdog;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

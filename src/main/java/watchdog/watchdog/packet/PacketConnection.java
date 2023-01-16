@@ -1,9 +1,7 @@
 package watchdog.watchdog.packet;
 
 import net.minecraft.server.v1_10_R1.*;
-import net.minecraft.server.v1_10_R1.Packet;
-import net.minecraft.server.v1_10_R1.PlayerConnection;
-import watchdog.watchdog.api.packet.PacketInfo;
+import watchdog.watchdog.api.packet.*;
 import watchdog.watchdog.api.packet.PacketListener;
 
 import java.util.List;

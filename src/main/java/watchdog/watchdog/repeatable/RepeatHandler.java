@@ -3,8 +3,7 @@ package watchdog.watchdog.repeatable;
 import watchdog.watchdog.api.repeatable.IRepeatable;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Avis Network on 2017-06-20.
