@@ -1,5 +1,5 @@
 prefix:
-  success: '&a[WatchDog]'
+  success: '&4[WatchDog]'
   notice: '&6[WatchDog]'
 messages:
   playeradded: 'Player %PLAYER% has been added to the watchlist!'
