@@ -1,10 +1,11 @@
-package watchdog.watchdog;
+package FSMP.FSMP.base;
 
 import java.util.*;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import FSMP.FSMP.FSMP;
 
 public class CommandHandler {
 
@@ -16,9 +17,9 @@ public class CommandHandler {
      * @return      void
      */
     public void addPlayer(CommandSender sender, String player, String reason) {
-        Player targetPlayer = WatchDog.getInstance().getServer().getPlayerExact(player);
+        Player targetPlayer = FSMP.getInstance().getServer().getPlayerExact(player);
         String playerUUID = "", node = "";
-        String notice = WatchDog.getInstance().getConfig().getString("messages.playeradded", "Player %PLAYER% has been added to the watchlist!");
+        String notice = FSMP.getInstance().getConfig().getString("messages.playeradded", "Player %PLAYER% has been added to the watchlist!");
         notice = notice.replace("%PLAYER%", player);
 
         Calendar cal = Calendar.getInstance();
@@ -37,17 +38,17 @@ public class CommandHandler {
             if (! playerUUID.isEmpty()) {
                 node = ("players." + playerUUID);
 
-                WatchDog.getInstance().getConfig().set((node + ".name"), player);
+                FSMP.getInstance().getConfig().set((node + ".name"), player);
             } else {
                 node = ("users." + player.toLowerCase());
             }
 
-            WatchDog.getInstance().getConfig().set((node + ".addedby"), sender.getName());
-            WatchDog.getInstance().getConfig().set((node + ".addedon"), time);
-            WatchDog.getInstance().getConfig().set((node + ".reason"), reason);
-            WatchDog.getInstance().saveConfig();
+            FSMP.getInstance().getConfig().set((node + ".addedby"), sender.getName());
+            FSMP.getInstance().getConfig().set((node + ".addedon"), time);
+            FSMP.getInstance().getConfig().set((node + ".reason"), reason);
+            FSMP.getInstance().saveConfig();
 
-            WatchDog.getInstance().messenger.printMessage(sender, "success", notice);
+            FSMP.getInstance().messenger.printMessage(sender, "success", notice);
         }
     }
 
@@ -59,11 +60,11 @@ public class CommandHandler {
      * @return      void
      */
     public void removePlayer(CommandSender sender, String player) {
-        Player targetPlayer = WatchDog.getInstance().getServer().getPlayerExact(player);
+        Player targetPlayer = FSMP.getInstance().getServer().getPlayerExact(player);
         String playerUUID = "";
         Boolean found = false;
-        String removedNotice = WatchDog.getInstance().getConfig().getString("messages.playerremoved", "Player %PLAYER% has been removed from the watchlist!");
-        String notFoundNotice = WatchDog.getInstance().getConfig().getString("messages.playernotfound", "Player %PLAYER% is not in the watchlist!");
+        String removedNotice = FSMP.getInstance().getConfig().getString("messages.playerremoved", "Player %PLAYER% has been removed from the watchlist!");
+        String notFoundNotice = FSMP.getInstance().getConfig().getString("messages.playernotfound", "Player %PLAYER% is not in the watchlist!");
 
         if (! player.isEmpty()) {
             if (targetPlayer != null) {
@@ -73,34 +74,34 @@ public class CommandHandler {
             removedNotice = removedNotice.replace("%PLAYER%", player);
             notFoundNotice = notFoundNotice.replace("%PLAYER%", player);
 
-            if (WatchDog.getInstance().getConfig().get("users." + player.toLowerCase()) != null) {
+            if (FSMP.getInstance().getConfig().get("users." + player.toLowerCase()) != null) {
                 // Check old player name method
                 found = true;
 
-                WatchDog.getInstance().getConfig().set("users." + player.toLowerCase(), null);
-                WatchDog.getInstance().saveConfig();
-            } else if (! playerUUID.isEmpty() && WatchDog.getInstance().getConfig().getString("players." + playerUUID) != null) {
+                FSMP.getInstance().getConfig().set("users." + player.toLowerCase(), null);
+                FSMP.getInstance().saveConfig();
+            } else if (! playerUUID.isEmpty() && FSMP.getInstance().getConfig().getString("players." + playerUUID) != null) {
                 // Check new UUID method
                 found = true;
 
-                removedNotice = removedNotice.replace("%PLAYER%", WatchDog.getInstance().getConfig().getString("players." + playerUUID + ".name"));
-                notFoundNotice = notFoundNotice.replace("%PLAYER%", WatchDog.getInstance().getConfig().getString("players." + playerUUID + ".name"));
+                removedNotice = removedNotice.replace("%PLAYER%", FSMP.getInstance().getConfig().getString("players." + playerUUID + ".name"));
+                notFoundNotice = notFoundNotice.replace("%PLAYER%", FSMP.getInstance().getConfig().getString("players." + playerUUID + ".name"));
 
-                WatchDog.getInstance().getConfig().set("players." + playerUUID, null);
-                WatchDog.getInstance().saveConfig();
+                FSMP.getInstance().getConfig().set("players." + playerUUID, null);
+                FSMP.getInstance().saveConfig();
             } else {
-                Set<String> players = WatchDog.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
+                Set<String> players = FSMP.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
 
                 if (players != null) {
                     for (String playerRecord: players) {
                         if (! playerRecord.contains(".")) {
-                            String playerName = WatchDog.getInstance().getConfig().getString("players." + playerRecord + ".name");
+                            String playerName = FSMP.getInstance().getConfig().getString("players." + playerRecord + ".name");
 
                             if (playerName.equalsIgnoreCase(player)) {
                                 found = true;
 
-                                WatchDog.getInstance().getConfig().set("players." + playerRecord, null);
-                                WatchDog.getInstance().saveConfig();
+                                FSMP.getInstance().getConfig().set("players." + playerRecord, null);
+                                FSMP.getInstance().saveConfig();
                             }
                         }
                     }
@@ -108,9 +109,9 @@ public class CommandHandler {
             }
 
             if (found) {
-                WatchDog.getInstance().messenger.printMessage(sender, "success", removedNotice);
+                FSMP.getInstance().messenger.printMessage(sender, "success", removedNotice);
             } else {
-                WatchDog.getInstance().messenger.printMessage(sender, "success", notFoundNotice);
+                FSMP.getInstance().messenger.printMessage(sender, "success", notFoundNotice);
             }
         }
     }
@@ -123,44 +124,44 @@ public class CommandHandler {
      * @return      void
      */
     public void toggleNotify(CommandSender sender, String param) {
-        String senderUUID = WatchDog.getInstance().getServer().getPlayerExact(sender.getName()).getUniqueId().toString();
+        String senderUUID = FSMP.getInstance().getServer().getPlayerExact(sender.getName()).getUniqueId().toString();
 
         String oldNode = ("notify." + sender.getName()).toLowerCase();
         String node = ("notify." + senderUUID);
         String notice = "", status = "";
 
         // Convert to UUID if necessary
-        if (WatchDog.getInstance().getConfig().getString(oldNode) != null) {
-            status = WatchDog.getInstance().getConfig().getString(oldNode);
+        if (FSMP.getInstance().getConfig().getString(oldNode) != null) {
+            status = FSMP.getInstance().getConfig().getString(oldNode);
 
-            WatchDog.getInstance().getConfig().set(node, status);
-            WatchDog.getInstance().getConfig().set(oldNode, null);
+            FSMP.getInstance().getConfig().set(node, status);
+            FSMP.getInstance().getConfig().set(oldNode, null);
         }
 
         if (param.equals("status") || param == null) {
-            status = WatchDog.getInstance().getConfig().getString(node);
+            status = FSMP.getInstance().getConfig().getString(node);
 
             if (status == "disabled") {
-                notice = WatchDog.getInstance().getConfig().getString("messages.notificationsdisabled", "Your notifications are disabled.");
+                notice = FSMP.getInstance().getConfig().getString("messages.notificationsdisabled", "Your notifications are disabled.");
             } else {
-                notice = WatchDog.getInstance().getConfig().getString("messages.notificationsenabled", "Your notifications are enabled.");
+                notice = FSMP.getInstance().getConfig().getString("messages.notificationsenabled", "Your notifications are enabled.");
             }
         } else if (param.equals("enable") || param.equals("on")) {
-            WatchDog.getInstance().getConfig().set(node, "enabled");
-            WatchDog.getInstance().saveConfig();
+            FSMP.getInstance().getConfig().set(node, "enabled");
+            FSMP.getInstance().saveConfig();
 
-            notice = WatchDog.getInstance().getConfig().getString("messages.notifyenable", "Notifications enabled!");
+            notice = FSMP.getInstance().getConfig().getString("messages.notifyenable", "Notifications enabled!");
         } else if(param.equals("disable") || param.equals("off")) {
-            WatchDog.getInstance().getConfig().set(node, "disabled");
-            WatchDog.getInstance().saveConfig();
+            FSMP.getInstance().getConfig().set(node, "disabled");
+            FSMP.getInstance().saveConfig();
 
-            notice = WatchDog.getInstance().getConfig().getString("messages.notifydisable", "Notifications disabled!");
+            notice = FSMP.getInstance().getConfig().getString("messages.notifydisable", "Notifications disabled!");
         }
 
         if (notice == "") {
-            WatchDog.getInstance().messenger.sendHelp(sender);
+            FSMP.getInstance().messenger.sendHelp(sender);
         } else {
-            WatchDog.getInstance().messenger.printMessage(sender, "success", notice);
+            FSMP.getInstance().messenger.printMessage(sender, "success", notice);
         }
     }
 
@@ -177,14 +178,14 @@ public class CommandHandler {
         String onlineStatus = " ";
 
         // Check old player name method
-        if (WatchDog.getInstance().getConfig().isConfigurationSection("users")) {
-            Set<String> users = WatchDog.getInstance().getConfig().getConfigurationSection("users").getKeys(true);
+        if (FSMP.getInstance().getConfig().isConfigurationSection("users")) {
+            Set<String> users = FSMP.getInstance().getConfig().getConfigurationSection("users").getKeys(true);
 
             if (users != null) {
                 for(String user: users) {
                     if (! user.contains(".")) {
                         if (online.equals("online")) {
-                            Player targetPlayer = WatchDog.getInstance().getServer().getPlayerExact(user);
+                            Player targetPlayer = FSMP.getInstance().getServer().getPlayerExact(user);
                             if (targetPlayer != null && targetPlayer.isOnline()) {
                                 userCount++;
                                 userList += user + ", ";
@@ -199,16 +200,16 @@ public class CommandHandler {
         }
 
         // Check new UUID method
-        if (WatchDog.getInstance().getConfig().isConfigurationSection("players")) {
-            Set<String> players = WatchDog.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
+        if (FSMP.getInstance().getConfig().isConfigurationSection("players")) {
+            Set<String> players = FSMP.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
 
             if (players != null) {
                 for (String player: players) {
                     if (! player.contains(".")) {
-                        String playerName = WatchDog.getInstance().getConfig().getString("players." + player + ".name");
+                        String playerName = FSMP.getInstance().getConfig().getString("players." + player + ".name");
 
                         if (online.equals("online")) {
-                            Player targetPlayer = WatchDog.getInstance().getServer().getPlayer(playerName);
+                            Player targetPlayer = FSMP.getInstance().getServer().getPlayer(playerName);
                             if (targetPlayer != null && targetPlayer.isOnline()) {
                                 userCount++;
                                 userList += playerName + ", ";
@@ -227,15 +228,15 @@ public class CommandHandler {
         }
 
         if (userCount == 0) {
-            WatchDog.getInstance().messenger.printMessage(sender, "success", "There are no" + onlineStatus + "users in the watchlist.");
+            FSMP.getInstance().messenger.printMessage(sender, "success", "There are no" + onlineStatus + "users in the watchlist.");
         } else if (userCount == 1) {
-            WatchDog.getInstance().messenger.printMessage(sender, "success", "There is 1" + onlineStatus + "user in the watchlist.");
+            FSMP.getInstance().messenger.printMessage(sender, "success", "There is 1" + onlineStatus + "user in the watchlist.");
 
             if (displayType.equals("list")) {
                 sender.sendMessage(userList.substring(0, userList.length() - 2));
             }
         } else {
-            WatchDog.getInstance().messenger.printMessage(sender, "success", "There are " + userCount + onlineStatus + "users in the watchlist.");
+            FSMP.getInstance().messenger.printMessage(sender, "success", "There are " + userCount + onlineStatus + "users in the watchlist.");
 
             if (displayType.equals("list")) {
                 sender.sendMessage(userList.substring(0, userList.length() - 2));
@@ -251,7 +252,7 @@ public class CommandHandler {
      * @return      void
      */
     public void searchUsers(CommandSender sender, String player) {
-        Player targetPlayer = WatchDog.getInstance().getServer().getPlayerExact(player);
+        Player targetPlayer = FSMP.getInstance().getServer().getPlayerExact(player);
         String playerUUID = "";
 
         if (! player.isEmpty()) {
@@ -259,15 +260,15 @@ public class CommandHandler {
                 playerUUID = targetPlayer.getUniqueId().toString();
             }
 
-            if (WatchDog.getInstance().getConfig().get("users." + player.toLowerCase()) != null) {
+            if (FSMP.getInstance().getConfig().get("users." + player.toLowerCase()) != null) {
                 // Check old name based method
                 getInfo(sender, player);
-            } else if(! playerUUID.isEmpty() && WatchDog.getInstance().getConfig().get("players." + playerUUID) != null) {
+            } else if(! playerUUID.isEmpty() && FSMP.getInstance().getConfig().get("players." + playerUUID) != null) {
                 // Check new UUID method
                 getInfo(sender, player);
             } else {
-                Set<String> users = WatchDog.getInstance().getConfig().getConfigurationSection("users").getKeys(true);
-                Set<String> players = WatchDog.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
+                Set<String> users = FSMP.getInstance().getConfig().getConfigurationSection("users").getKeys(true);
+                Set<String> players = FSMP.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
                 Set<String> found = new HashSet<String>();
                 int userCount = 0;
 
@@ -283,7 +284,7 @@ public class CommandHandler {
                 if (players != null) {
                     for (String playerRecord: players) {
                         if (! playerRecord.contains(".")) {
-                            String targetPlayerName = WatchDog.getInstance().getConfig().getString("players." + playerRecord + ".name");
+                            String targetPlayerName = FSMP.getInstance().getConfig().getString("players." + playerRecord + ".name");
 
                             if (targetPlayerName.toLowerCase().contains(player.toLowerCase())) {
                                 found.add(targetPlayerName);
@@ -294,13 +295,13 @@ public class CommandHandler {
                 }
 
                 if (! found.isEmpty()) {
-                    WatchDog.getInstance().messenger.printMessage(sender, "success", "Found the following " + userCount + " players:");
+                    FSMP.getInstance().messenger.printMessage(sender, "success", "Found the following " + userCount + " players:");
 
                     for(String foundUser: found) {
                         getInfo(sender, foundUser);
                     }
                 } else {
-                    WatchDog.getInstance().messenger.printMessage(sender, "success", "No users found matching \"" + player + "\"");
+                    FSMP.getInstance().messenger.printMessage(sender, "success", "No users found matching \"" + player + "\"");
                 }
             }
         }
@@ -316,7 +317,7 @@ public class CommandHandler {
     public void getInfo(CommandSender sender, String player) {
         Boolean found = false;
         String addedBy = "", addedOn = "", reason = "";
-        Player targetPlayer = WatchDog.getInstance().getServer().getPlayerExact(player);
+        Player targetPlayer = FSMP.getInstance().getServer().getPlayerExact(player);
         String playerUUID = "";
 
         if (! player.isEmpty()) {
@@ -324,46 +325,46 @@ public class CommandHandler {
                 playerUUID = targetPlayer.getUniqueId().toString();
             }
 
-            if (WatchDog.getInstance().getConfig().get("users." + player.toLowerCase()) != null) {
+            if (FSMP.getInstance().getConfig().get("users." + player.toLowerCase()) != null) {
                 found = true;
 
-                addedBy = WatchDog.getInstance().getConfig().getString("users." + player.toLowerCase() + ".addedby", "console");
-                addedOn = WatchDog.getInstance().getConfig().getString("users." + player.toLowerCase() + ".addedon", "unknown");
-                reason = WatchDog.getInstance().getConfig().getString("users." + player.toLowerCase() + ".reason", "unknown");
-            } else if (! playerUUID.isEmpty() && WatchDog.getInstance().getConfig().getString("players." + playerUUID) != null) {
+                addedBy = FSMP.getInstance().getConfig().getString("users." + player.toLowerCase() + ".addedby", "console");
+                addedOn = FSMP.getInstance().getConfig().getString("users." + player.toLowerCase() + ".addedon", "unknown");
+                reason = FSMP.getInstance().getConfig().getString("users." + player.toLowerCase() + ".reason", "unknown");
+            } else if (! playerUUID.isEmpty() && FSMP.getInstance().getConfig().getString("players." + playerUUID) != null) {
                 found = true;
 
-                addedBy = WatchDog.getInstance().getConfig().getString("players." + playerUUID + ".addedby", "console");
-                addedOn = WatchDog.getInstance().getConfig().getString("players." + playerUUID + ".addedon", "unknown");
-                reason = WatchDog.getInstance().getConfig().getString("players." + playerUUID + ".reason", "unknown");
+                addedBy = FSMP.getInstance().getConfig().getString("players." + playerUUID + ".addedby", "console");
+                addedOn = FSMP.getInstance().getConfig().getString("players." + playerUUID + ".addedon", "unknown");
+                reason = FSMP.getInstance().getConfig().getString("players." + playerUUID + ".reason", "unknown");
             } else {
-                Set<String> players = WatchDog.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
+                Set<String> players = FSMP.getInstance().getConfig().getConfigurationSection("players").getKeys(true);
 
                 if (players != null) {
                     for (String playerRecord: players) {
-                        String playerName = WatchDog.getInstance().getConfig().getString("players." + playerRecord + ".name");
+                        String playerName = FSMP.getInstance().getConfig().getString("players." + playerRecord + ".name");
 
                         if (playerName.toLowerCase() == player.toLowerCase()) {
                             found = true;
 
-                            addedBy = WatchDog.getInstance().getConfig().getString("players." + playerRecord + ".addedby", "console");
-                            addedOn = WatchDog.getInstance().getConfig().getString("players." + playerRecord + ".addedon", "unknown");
-                            reason = WatchDog.getInstance().getConfig().getString("players." + playerRecord + ".reason", "unknown");
+                            addedBy = FSMP.getInstance().getConfig().getString("players." + playerRecord + ".addedby", "console");
+                            addedOn = FSMP.getInstance().getConfig().getString("players." + playerRecord + ".addedon", "unknown");
+                            reason = FSMP.getInstance().getConfig().getString("players." + playerRecord + ".reason", "unknown");
                         }
                     }
                 }
             }
 
             if (found) {
-                WatchDog.getInstance().messenger.printMessage(sender, "success", "Player " + player + " entry:");
+                FSMP.getInstance().messenger.printMessage(sender, "success", "Player " + player + " entry:");
                 sender.sendMessage(ChatColor.GOLD + "    Added: " + ChatColor.WHITE + addedOn);
                 sender.sendMessage(ChatColor.GOLD + "    Added By: " + ChatColor.WHITE + addedBy);
                 sender.sendMessage(ChatColor.GOLD + "    Reason: " + ChatColor.WHITE + reason);
             } else {
-                String notFoundNotice = WatchDog.getInstance().getConfig().getString("messages.playernotfound", "Player %PLAYER% is not in the watchlist!");
+                String notFoundNotice = FSMP.getInstance().getConfig().getString("messages.playernotfound", "Player %PLAYER% is not in the watchlist!");
                 notFoundNotice = notFoundNotice.replace("%PLAYER%", player);
 
-                WatchDog.getInstance().messenger.printMessage(sender, "success", notFoundNotice);
+                FSMP.getInstance().messenger.printMessage(sender, "success", notFoundNotice);
             }
         }
     }

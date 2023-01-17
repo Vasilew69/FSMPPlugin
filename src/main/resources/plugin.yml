@@ -1,10 +1,11 @@
-name: WatchDog
+name: FSMP
 version: '${project.version}'
-main: watchdog.watchdog.WatchDog
+main: FSMP.FSMP.FSMP
 api-version: 1.19
 authors: [ FSMP ]
-description: WatchDog
-resourceId: 107408
+description: FSMP
+depend: [Vault]
+softdepend: [PlayerPoints]
 commands:
   wd:
     description: 'WatchDog plugin command'

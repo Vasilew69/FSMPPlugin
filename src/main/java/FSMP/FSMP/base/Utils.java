@@ -1,4 +1,4 @@
-package watchdog.watchdog;
+package FSMP.FSMP.base;
 
 import net.minecraft.network.protocol.Packet;
 import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;

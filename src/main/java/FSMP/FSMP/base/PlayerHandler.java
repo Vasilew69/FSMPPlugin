@@ -1,4 +1,4 @@
-package watchdog.watchdog;
+package FSMP.FSMP.base;
 
 import org.bukkit.command.CommandSender;
 
